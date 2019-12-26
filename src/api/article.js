@@ -9,10 +9,19 @@ export const getPostList = (params) => {
         params
      })
 }
-//获取文章列表
+//获取栏目列表
 
 export const getCategory = () => {
     return axios({
         url: '/category'
      })
 }
+//发布文章
+
+export const publishPost = (data) => {
+    return axios({
+      method: 'post',
+      url: '/post',
+      data
+    })
+  }

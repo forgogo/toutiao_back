@@ -3,9 +3,9 @@
     <el-container>
       <el-aside width="200px">
         <el-menu
+          :default-active="activeCate"
           :router="true"
           :unique-opened="true"
-          default-active="2"
           class="el-menu-vertical-demo"
           background-color="#545c64"
           text-color="#fff"
@@ -22,7 +22,6 @@
             <el-menu-item-group>
               <el-menu-item index="1-1">用户列表</el-menu-item>
             </el-menu-item-group>
-             
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
@@ -60,7 +59,7 @@
           <div class="welcome">
             <span>欢迎您：{{user.nickname}}</span> &nbsp;&nbsp;&nbsp;
             <!-- <span @click="logout">退出</span> -->
-              <el-button type="danger" @click="logout">退出</el-button>
+            <el-button type="danger" @click="logout">退出</el-button>
           </div>
         </el-header>
         <el-main>
@@ -76,6 +75,7 @@ import { getUser } from "@/api/user.js";
 export default {
   data() {
     return {
+      activeCate: "",
       user: {
         head_img: "",
         id: "",
@@ -92,10 +92,12 @@ export default {
     }
   },
   async mounted() {
+    let activeCate =this.$route.path.substring(this.$route.path.lastIndexOf("/")+1)
+    this.activeCate=activeCate
     let userId = localStorage.getItem("toutiao_back_userId");
     // eslint-disable-next-line no-unused-vars
     let res = await getUser(userId);
-    console.log(res);
+    // console.log(res);
 
     if (res.data.message === "获取成功") {
       this.user.id = res.data.data.id;
@@ -163,7 +165,7 @@ export default {
     color: white;
   }
 }
-.el-button--danger{
+.el-button--danger {
   padding: 8px 10px;
   margin-left: 10px;
 }
